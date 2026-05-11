@@ -2,6 +2,7 @@ from rest_framework import serializers
 from .models import Babysitter, Meetings, Requests , Parents , Kids , Reviews , AvailableTime 
 from django.contrib.auth.models import User
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from django.contrib.auth.hashers import check_password
 
 
 
@@ -60,8 +61,9 @@ class RegistrationSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("A user with that email already exists.")
         return value
     def validate_password(self, value):
-        if User.objects.filter(password=value).exists():
-           raise serializers.ValidationError("A user with that password already exists.")
+        for user in User.objects.all():
+            if check_password(value, user.password):
+                raise serializers.ValidationError("This password is already used by another user.")
         return value
             
 ##########################################################################################################################################
