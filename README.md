@@ -237,11 +237,19 @@ CORS_ALLOWED_ORIGINS = [
 ## Environment Variables
 
 The backend uses environment variables for sensitive settings.
-Create a .env file in the same folder as manage.py:
+After cloning the project, create a `.env` file from the example file:
+cp .env.example .env
+
+Then open the .env file and replace the values:
 SECRET_KEY=your-django-secret-key
+GEMINI_API_KEY=your-gemini-api-key
 DEBUG=True
 ALLOWED_HOSTS=127.0.0.1,localhost
-GEMINI_API_KEY=your-gemini-api-key
+
+To generate a Django secret key, run:
+python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+Copy the generated key and paste it as the value of SECRET_KEY in the .env file.
+
 The AI API key is used by the AI message helper.  
 The key must stay in the backend and should not be placed in the React frontend.
 
@@ -259,12 +267,20 @@ The key must stay in the backend and should not be placed in the React frontend.
         myenv\Scripts\activate (Windows)
 ### 4. Install dependencies
         pip install -r requirements.txt
-### 5. Run migrations
+### 5. Create .env file and secret key
+        Create a .env file from the example file:
+        cp .env.example .env
+        
+        Generate a Django secret key: 
+        python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+        
+        Copy the generated key and paste it into the .env file
+### 6. Run migrations
         python manage.py makemigrations
         python manage.py migrate
-### 6. Create superuser
+### 7. Create superuser
         python manage.py createsuperuser
-### 7. Run the server
+### 8. Run the server
         python manage.py runserver 
         (The backend will run by default at: http://127.0.0.1:8000/)
 
